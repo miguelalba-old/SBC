@@ -19,22 +19,8 @@ class Clase(object):
         """Devuelve el texto de la descripción de una clase."""
 
         descripcion = u''
-        # print 'Nombre: ', self.nombre
-        descripcion += self.nombre+'\n'
-        for r in self.reglas:
-            # print r.idRegla,r.tipo, r.subtipo, r.atributo.nombre,
-            # r.valorEsperado
-            descripcion += r.idRegla+' '+r.tipo+' ' + \
-                'None' + ' ' + r.atributo.nombre+' '
-            if isinstance(r.valorEsperado, str):
-                descripcion += ' '+r.valorEsperado+'\n'
-            elif (isinstance(r.valorEsperado, int) or
-                  isinstance(r.valorEsperado, float)):
-                descripcion += ' '+str(r.valorEsperado)+'\n'
-            elif isinstance(r.valorEsperado, list):
-                for i in r.valorEsperado:
-                    descripcion += ' '+str(i)+' '
-                descripcion += '\n'
+        descripcion += self.nombre + '\n'
+        descripcion += '\n'.join([rule.descripcion() for rule in self.reglas])
         return descripcion
 
 
@@ -48,7 +34,6 @@ class Regla(object):
     def __init__(self, idRegla, tipo):
         self.idRegla = idRegla
         self.tipo = tipo
-        pass
 
 
 class Rverifica(Regla):
@@ -83,17 +68,17 @@ class Rverifica(Regla):
 
     def descripcion(self):
         descripcion = u''
-        descripcion += 'idRegla: '+self.idRegla+'\n'
-        descripcion += 'Tipo: '+self.tipo+'\n'
-        descripcion += 'Atributo: '+self.atributo.nombre+'\n'
+        valor_esperado = ''
         if isinstance(self.valorEsperado, str):
-            descripcion += 'Valor esperado: '+self.valorEsperado+'\n'
-        elif (isinstance(self.valorEsperado, int) or
-              isinstance(self.valorEsperado, float)):
-            descripcion += 'Valor esperado: '+str(self.valorEsperado)+'\n'
+            valor_esperado = self.valorEsperado
+        elif isinstance(self.valorEsperado, (int, float)):
+            valor_esperado = str(self.valorEsperado)
         elif isinstance(self.valorEsperado, list):
-            for ve in self.valorEsperado:
-                descripcion += 'Valor esperado: '+str(self.valorEsperado)+'  '
+            valor_esperado = ' '.join([str(i) for i in self.valorEsperado])
+
+        campos_regla = (self.idRegla, self.tipo, self.atributo.nombre, 'None',
+                        valor_esperado)
+        descripcion = ' '.join(campos_regla)
 
         return descripcion
 
