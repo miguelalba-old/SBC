@@ -117,3 +117,10 @@ class Atributo():
         self.nombre=nombre
         self.tipo=tipo
         self.unidad=unidad
+
+
+class Caracteristica():
+    u'''Clase característica que establece el valor para un atributo'''
+    def __init__(self,atributo,valor):
+        self.atributo=atributo
+        self.valor=valor

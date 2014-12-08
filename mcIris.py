@@ -11,6 +11,7 @@ from kmod import Regla
 from kmod import Rverifica
 from kmod import Objeto
 from kmod import Atributo
+from kmod import Caracteristica
 
 
 #----LAS CLASES DE LA BASE DE CONOCIMIENTO DE FRUTOS-----------
@@ -71,19 +72,7 @@ class Versicolor(Flor):
         self.reglas=[r1,r2,r3,r4]
 
 
-#------------------------LOS ATRIBUTOS-----------------------------------------
-class Caracteristica():
-    u'''Clase característica que establece el valor para un atributo'''
-    def __init__(self,atributo,valor):
-        self.atributo=atributo
-        self.valor=valor
-
-
-
 #-----------------------FUNCIONES----------------------------------------------
-
-
-
 def clases():
     '''
     Crea una lista de clases candidatas de la base de conocimiento.
