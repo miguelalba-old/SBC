@@ -5,15 +5,15 @@ Created on Sun Jan 19 12:19:10 2014
 
 @author: acalvo
 """
-#import mcFrutos as mc #Cambiar al cambiar el MC
-import mcIris as mc #Cambiar al cambiar el MC
+import mcFrutos as mc #Cambiar al cambiar el MC
+#import mcIris as mc #Cambiar al cambiar el MC
 
 class Tarea():
     def __init__(self):
         self.objetivo=''
         self.descripcion=''
         pass
-    
+
 class Clasificacion(Tarea):
     def __init__(self,bc,objeto):
         self.objetivo=u'''    '''
@@ -21,13 +21,13 @@ class Clasificacion(Tarea):
         self.bc=bc
         self.metodo='poda'
         self.salida=None
-        
+
     def execute(self):
         print 'ejectutando la tarea'
         if self.metodo=='poda':
             mt=MetodoPoda()
         pass
-    
+
 class MetodoPoda():
     '''Dado un objeto clasificarlo como perteneciente a una clase
     '''
@@ -49,26 +49,26 @@ class MetodoPoda():
         newSolucion=True
         while newSolucion and len(self.clasesCandidatas)>0:#Mientras se esté buscando una nueva solución :
                                                            #y haya clases candidatas
-            
-            print             
+
+            print
             print 'inicio while-> Lista de atributos usados:', self.lAtributosUsados
             print 'Clases candidatas:',self.clasesCandidatas
             for clc in self.clasesCandidatas:
                 print clc.nombre
             print'======================='
-            print 
-            
+            print
+
             esp=Especificar(self.clasesCandidatas,self.lAtributosUsados)#Especifica un atributo
             #print 'Número de clases candidatas:', len(self.clasesCandidatas)
             newLatr=esp.execute() #Se especifica el nuevo atributo
-            
+
             if not newLatr==(None,None): #Si sigue habiendo atributos:
                 self.lAtributosUsados=newLatr[1]#Tomamos la nueva lista de ATRIBUTOS usados
                 print 'new atributo seleccionado:', newLatr[0].nombre
                 print 'Atributos usados ',
                 for atu in self.lAtributosUsados:
                     print atu.nombre,
-                    
+
                 print
                 self.explicacion+='Seleccionamos  el atributo '+newLatr[0].nombre+' '
                 #Obtenemos el valor del atributo en el objeto
@@ -78,43 +78,43 @@ class MetodoPoda():
                 print '======================='
                 print 'atributo y valor atributo del objeto:', at.atributo.nombre,at.valor
                 print '========================'
-                
+
                 self.explicacion+='con el valor: '
                 if not isinstance(at.valor,str):
                     self.explicacion+=str(at.valor)+'\n'
                 else:
                     self.explicacion+=at.valor+'\n'
-                    
+
                 self.conjuntoNuevosValores.append(at)#Se actualiza el conjunto de nuevos valores
-                
-                
+
+
                 newcc=[]#La lista de de nuevas candidatas se pone a vacía
                 for cc in self.clasesCandidatas: #Para cada clase en las clases candidatas
                     pass
-                    #Equiparar el conjunto de nuevos valores con el conjunto de clases candidatas y eliminar 
+                    #Equiparar el conjunto de nuevos valores con el conjunto de clases candidatas y eliminar
                     #las clases candidatas que no satisfagan los valores del atributo
                     self.explicacion+='    Probamos la clase candidata '+cc.nombre+'\n'
-                    print 
+                    print
                     print 'Probamos a equiparar la clase: ', cc.nombre
                     print ' con el conjunto de nuevos pares atributos/valores: '
                     for cnv in self.conjuntoNuevosValores:
                         print cnv.atributo.nombre,'=', cnv.valor
                     print '=================================='
-                    print 
+                    print
                     eq=Equiparar(cc, self.conjuntoNuevosValores)
                     result,expl = eq.execute()
                     self.explicacion+=expl
-                    
+
                     self.explicacion+='      Resultado de equiparar clase candidata '+cc.nombre+' '+str(result)+'\n'
                     print 'Resultado de equiparar la clase:', cc.nombre, result
-                    print 
+                    print
                     if  result==True:#Sólo añadimos las clases candidatas que satisfagan el valor del atributo
                         newcc.append(cc)
                         print 'Clase aceptada:',cc.nombre
-                    
+
             else:
                 print 'No quedan más atributos por especificar'
-                print 
+                print
                 newSolucion=False #No quedan más atributos por explorar
                 continue
             print
@@ -124,9 +124,9 @@ class MetodoPoda():
                 self.explicacion+=' '+cc.nombre+'  '
                 self.explicacion+='\n'+cc.descripcion()+'\n'
             self.explicacion+='\n'
-            
+
         return self.clasesCandidatas, self.explicacion
-        
+
 
 class Inferencia():
     def __init__(self):
@@ -142,28 +142,28 @@ class Equiparar(Inferencia):
         self.candidata=candidata
         self.nuevosValores=nuevosValores
         self.explicacion=u''
-    
+
     def execute(self):
         '''
         Equipara una clase candidata con el conjunto de nuevos
         valores devolviendo False si es rechazada la clase candidata.
         '''
-        print 
+        print
         print '===================================='
         print 'Ejecución de la inferencia equiparar'
         print '====================================='
-        print 
+        print
         #Para cada valor comprobar que es compatible con la definición de la clase
-        for nv in self.nuevosValores: #Para cada nuevo atributo-valor 
+        for nv in self.nuevosValores: #Para cada nuevo atributo-valor
             print 'Equiparando el atributo/valor del objeto:',nv.atributo.nombre,'=', nv.valor
             print 'Con la clase candidata ', self.candidata.nombre
-            
+
             self.explicacion+='\t Equiparar el atributo '+nv.atributo.nombre+'= '
             if not isinstance(nv.valor,str):
                 self.explicacion+=str(nv.valor)+'\n '
             else:
                 self.explicacion+=nv.valor+'\n '
-                
+
             for r in self.candidata.reglas:#Para cada regla en la clase candidata:
                 print 'Nombre y tipo  de la regla:', r.idRegla,r.tipo
                 if r.atributo.nombre==nv.atributo.nombre: #Si los atributos son comparables:
@@ -182,15 +182,15 @@ class Equiparar(Inferencia):
                 else:
                     print 'Regla no aplicable a este atributo\n'
         return True,self.explicacion #Ha pasado el test a todos los nuevos valores del objeto
-    
-    
-        
-    
+
+
+
+
 
 
 class Generar(Inferencia):
     '''Dado un objeto genera un conjunto de clases candidatas
-       Esta inferencia es básica se devuelven todas las clases 
+       Esta inferencia es básica se devuelven todas las clases
        candidatas que ofrece la base de conocimiento.
     '''
     def __init__(self,objeto):
@@ -200,13 +200,13 @@ class Generar(Inferencia):
         print '==================================='
         print 'Ejecución de la inferencia generar'
         print '==================================='
-        print 
-        clases=mc.clases() #Se ha simplificado mucho y devuelve todas 
+        print
+        clases=mc.clases() #Se ha simplificado mucho y devuelve todas
                              #las clases candidatas
         return clases
-        
+
 class Obtener(Inferencia):
-    '''Dado un aributo obtener un valor para ese atributo en 
+    '''Dado un aributo obtener un valor para ese atributo en
        el objeto a clasificar.
     '''
     def __init__(self,objeto,atributo):
@@ -214,17 +214,17 @@ class Obtener(Inferencia):
         self.objeto=objeto
         self.atributo=atributo
     def execute(self): #Ejecución del método de la inferencia:
-        print 
+        print
         print 'Ejecución de la inferencia obtener'
         print '=================================='
-        print 
+        print
         for cat in self.objeto.caracteristicas:#Para cada caracteristica del objeto
             if self.atributo.nombre==cat.atributo.nombre:#Si el nombre coincide
-                return cat #Devuelve la caracteristica del objeto          
+                return cat #Devuelve la caracteristica del objeto
         return None #Si no ha encontrado nada devuelve None
-        
+
 class Especificar(Inferencia):
-    '''Dado un conjunto de clases candidatas no vacío 
+    '''Dado un conjunto de clases candidatas no vacío
        especifica un atributo para extraer su valor en otra inferencia.
     '''
     def __init__(self,clasesCandidatas,lAtributosUsados):
@@ -244,17 +244,17 @@ class Especificar(Inferencia):
         print '================================='
         print 'Inferencia especificando atributo'
         print '================================='
-        print 
+        print
         if len(self.cc)>0: # El conjunto de clases candidatas no es vacío
             clase=self.cc[0] #especificamos la primera clase en la lista
             for at in clase.atributos:
                 #print 'at:,',at,at.nombre, '->',self.lAtributosUsados
-                if not at.nombre in [atu.nombre for atu in self.lAtributosUsados]:#Si ek atributo no está en los usados 
+                if not at.nombre in [atu.nombre for atu in self.lAtributosUsados]:#Si ek atributo no está en los usados
                     self.lAtributosUsados.append(at)#Se añade a la lista
                     return (at, self.lAtributosUsados)#Se retorna un atributo no usado y la lista de atributos
                                                       #que ya se han usado
-            
-            return None,None #Si todos los atributos están        
+
+            return None,None #Si todos los atributos están
 
 if __name__ == '__main__':
     diametro=mc.Atributo('diametro','int','cm')
@@ -279,7 +279,7 @@ if __name__ == '__main__':
            for c in clasesCandidatas:
                print c.nombre
         if ej==2: #Pruebas sobre la inferencia obtener:
-        
+
            #lcat=[[diametro,30],[peso,30],[color,'verde']]
            #lct=[[mc.Atributo('Ancho sepalo','int','mm'),30],[mc.Atributo('Largo sepalo','int','mm'),30],[mc.Atributo('Ancho petalo','int','mm'),45]]
            ob=mc.Objeto('ob1',mc.creaCaracteristicas(lct))#creo el objeto
@@ -289,7 +289,7 @@ if __name__ == '__main__':
            print 'valor devuelto para el atributo:'
            print rObtener.atributo.nombre, rObtener.valor, rObtener.atributo.unidad
            #print 'valor devuelto para el atributo:',obt.execute().atributo.nombre,obt.execute().valor
-        if ej==3: #Prueba de la inferencia especificar: 
+        if ej==3: #Prueba de la inferencia especificar:
             clases=mc.clases()
             latrUsados=[]
             infEsp=Especificar(clases,latrUsados) #Especifica un atributo de los no usados
@@ -303,7 +303,7 @@ if __name__ == '__main__':
                 infEsp=Especificar(clases,latrUsados) #Especifica un atributo de los no usados
                 r=infEsp.execute()
                 #if not r==(None,None):
-                #    print  r[0].nombre 
+                #    print  r[0].nombre
         if ej==4: #Prueba del método de la tarea:
             #4lcat=[[diametro,180],[peso,6000],[color,'verde']]
             #lct=[[mc.Atributo('Ancho sepalo','int','mm'),25],[mc.Atributo('Largo sepalo','int','mm'),110],[mc.Atributo('Ancho petalo','int','mm'),30],
@@ -316,12 +316,12 @@ if __name__ == '__main__':
             print 'Clases a las que pertenece el objeto:'
             for cc in r:
                 print '         ->',cc.nombre
-            
+
             print 'Explicación'
             print '==========='
-            
+
             print exp
-        
+
         if ej==5:
             #Por hacer y mejorar
             #lcat=[[diametro,180],[peso,6],[color,'verde']]
@@ -330,19 +330,19 @@ if __name__ == '__main__':
             #print cl.bc
             #print cl.bc.clases()
             pass
-        
+
 
         cont = raw_input('Desea continuar(s/n): ')
-    
-       
-       
-       
-         
-        
-        
-        
-    
 
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
