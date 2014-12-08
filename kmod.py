@@ -90,3 +90,19 @@ class Rverifica(Regla):
                 descripcion+='Valor esperado: '+str(self.valorEsperado)+'  '
 
         return descripcion
+
+
+#--------------------------LOS OBJETOS-----------------------------------------
+class Objeto():
+    def __init__(self,identificador,caracteristicas):
+        '''Se inicia la clase especificando el nombre y los atributos del objeto'''
+        print 'e va a crear'
+        self.identificador=identificador
+        self.caracteristicas=caracteristicas
+        self.clase=None
+        print 'objeto creado'
+        pass
+    def describeObjeto(self):
+        print 'Identificador= ',self.identificador
+        for ct in self.caracteristicas:
+            print ct.atributo.nombre, ct.atributo.tipo, ct.valor, ct.atributo.unidad

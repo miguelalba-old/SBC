@@ -9,6 +9,7 @@ Created on Sun Jan 19 12:19:10 2014
 from kmod import Clase
 from kmod import Regla
 from kmod import Rverifica
+from kmod import Objeto
 
 
 #----LAS CLASES DE LA BASE DE CONOCIMIENTO DE FRUTOS-----------
@@ -69,20 +70,6 @@ class Versicolor(Flor):
         self.reglas=[r1,r2,r3,r4]
 
 
-#--------------------------LOS OBJETOS-----------------------------------------
-class Objeto():
-    def __init__(self,identificador,caracteristicas):
-        '''Se inicia la clase especificando el nombre y los atributos del objeto'''
-        print 'e va a crear'
-        self.identificador=identificador
-        self.caracteristicas=caracteristicas
-        self.clase=None
-        print 'objeto creado'
-        pass
-    def describeObjeto(self):
-        print 'Identificador= ',self.identificador
-        for ct in self.caracteristicas:
-            print ct.atributo.nombre, ct.atributo.tipo, ct.valor, ct.atributo.unidad
 #------------------------LOS ATRIBUTOS-----------------------------------------
 class Atributo():
     '''Clase Atributo. permite especificar las propiedades
