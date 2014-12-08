@@ -7,6 +7,8 @@ Created on Sun Jan 19 12:19:10 2014
 """
 
 from kmod import Clase
+from kmod import Regla
+from kmod import Rverifica
 
 
 #----LAS CLASES DE LA BASE DE CONOCIMIENTO DE FRUTOS-----------
@@ -69,73 +71,6 @@ class Sandia(Fruto):
         r2=Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=atDiametro,valorEsperado=[100,300])
         r3=Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=atPeso,valorEsperado=[1000,8000])
         self.reglas=[r1,r2,r3]
-
-
-
-#-----------------------TIPOS DE REGLAS----------------------------------------
-class Regla():
-    '''
-    Describe aspectos generales de una regla
-    '''
-    def __init__(self,idRegla,tipo):
-        self.idRegla=idRegla
-        self.tipo=tipo
-        pass
-
-class Rverifica(Regla):
-    '''
-    Esta regla verifica si los valores de un atributo satisfacen
-    las restricciones de la regla de la clase. P.e.
-    -  La clase naranja debe de tener el atributo cuyo nombre es color naranja
-    '''
-    def __init__(self,idRegla,tipo,subtipo,atributo,valorEsperado):
-        Regla.__init__(self,idRegla,tipo)
-        self.subtipo=subtipo
-        self.atributo=atributo
-        self.valorEsperado=valorEsperado
-    def execute(self,at):
-        '''
-        Verifica que un atributo-valor satisface la regla de una clase.
-        '''
-        if self.atributo.nombre==at.nombre: #Deben de coincidor los nombres de los atributos
-
-            if self.tipo=='igual':#Si el atributo es de tipo igual
-                if self.valorEsperado==at.valor:
-                    return True
-                else:
-                    return False
-
-            if self.tipo=='rango':#Si el atributo es de tipo rango
-                print 'evaluo rango'
-                if at.valor <self.valorEsperado[1] and at.valor >=self.valorEsperado[0]:
-                    return True
-                else:
-                    return False
-        else:
-            return None
-
-    def descripcion(self):
-        descripcion=u''
-        descripcion+='idRegla: '+self.idRegla+'\n'
-        descripcion+='Tipo: '+self.tipo+'\n'
-        descripcion+='Atributo: '+self.atributo.nombre+'\n'
-        if isinstance(self.valorEsperado,str):
-            descripcion+='Valor esperado: '+self.valorEsperado+'\n'
-        elif isinstance(self.valorEsperado,int) or isinstance(self.valorEsperado,float):
-            descripcion+='Valor esperado: '+str(self.valorEsperado)+'\n'
-        elif isinstance(self.valorEsperado,list) :
-            for ve in self.valorEsperado:
-                descripcion+='Valor esperado: '+str(self.valorEsperado)+'  '
-
-        return descripcion
-        #print 'idRegla: ',self.idRegla
-        #print 'Tipo: ',self.tipo
-        #print 'Atributo: ', self.atributo.nombre
-        #print 'Valor esperado: ', self.valorEsperado
-
-
-
-
 
 
 #--------------------------LOS OBJETOS-----------------------------------------
