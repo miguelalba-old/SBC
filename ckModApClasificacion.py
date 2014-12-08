@@ -5,6 +5,7 @@ Created on Sun Jan 19 12:19:10 2014
 
 @author: acalvo
 """
+import kmod
 import mcFrutos as mc #Cambiar al cambiar el MC
 #import mcIris as mc #Cambiar al cambiar el MC
 
@@ -257,15 +258,15 @@ class Especificar(Inferencia):
             return None,None #Si todos los atributos están
 
 if __name__ == '__main__':
-    diametro=mc.Atributo('diametro','int','cm')
-    peso=mc.Atributo('peso','int','gr')
-    color=mc.Atributo('color','str',None)
-    at=mc.Atributo('diametro','int','mm')
+    diametro=kmod.Atributo('diametro','int','cm')
+    peso=kmod.Atributo('peso','int','gr')
+    color=kmod.Atributo('color','str',None)
+    at=kmod.Atributo('diametro','int','mm')
     lct=[[diametro,200],[peso,6000],[color,'verde']]
     #
-    #lct=[[mc.Atributo('Ancho sepalo','int','mm'),25],[mc.Atributo('Largo sepalo','int','mm'),110],[mc.Atributo('Ancho petalo','int','mm'),30],
-     #             [mc.Atributo('Largo petalo','int','mm'),85]]
-    ob1=mc.Objeto('p1',mc.creaCaracteristicas(lct))#se crea un objeto a partir de las instancias de la lista de caracteristicas
+    #lct=[[kmod.Atributo('Ancho sepalo','int','mm'),25],[kmod.Atributo('Largo sepalo','int','mm'),110],[kmod.Atributo('Ancho petalo','int','mm'),30],
+     #             [kmod.Atributo('Largo petalo','int','mm'),85]]
+    ob1=kmod.Objeto('p1',kmod.creaCaracteristicas(lct))#se crea un objeto a partir de las instancias de la lista de caracteristicas
     cont='s'
     while cont=='s':
         ej=input('Entre la prueba (1,2,3,4,5):' )
@@ -281,8 +282,8 @@ if __name__ == '__main__':
         if ej==2: #Pruebas sobre la inferencia obtener:
 
            #lcat=[[diametro,30],[peso,30],[color,'verde']]
-           #lct=[[mc.Atributo('Ancho sepalo','int','mm'),30],[mc.Atributo('Largo sepalo','int','mm'),30],[mc.Atributo('Ancho petalo','int','mm'),45]]
-           ob=mc.Objeto('ob1',mc.creaCaracteristicas(lct))#creo el objeto
+           #lct=[[kmod.Atributo('Ancho sepalo','int','mm'),30],[kmod.Atributo('Largo sepalo','int','mm'),30],[kmod.Atributo('Ancho petalo','int','mm'),45]]
+           ob=kmod.Objeto('ob1',kmod.creaCaracteristicas(lct))#creo el objeto
            ob.describeObjeto()
            obt=Obtener(ob,at)
            rObtener=obt.execute()
@@ -306,9 +307,9 @@ if __name__ == '__main__':
                 #    print  r[0].nombre
         if ej==4: #Prueba del método de la tarea:
             #4lcat=[[diametro,180],[peso,6000],[color,'verde']]
-            #lct=[[mc.Atributo('Ancho sepalo','int','mm'),25],[mc.Atributo('Largo sepalo','int','mm'),110],[mc.Atributo('Ancho petalo','int','mm'),30],
-            #      [mc.Atributo('Largo petalo','int','mm'),85]]
-            ob=mc.Objeto('ob1',mc.creaCaracteristicas(lct))#creo el objeto
+            #lct=[[kmod.Atributo('Ancho sepalo','int','mm'),25],[kmod.Atributo('Largo sepalo','int','mm'),110],[kmod.Atributo('Ancho petalo','int','mm'),30],
+            #      [kmod.Atributo('Largo petalo','int','mm'),85]]
+            ob=kmod.Objeto('ob1',kmod.creaCaracteristicas(lct))#creo el objeto
             mp=MetodoPoda(ob) #Se crea la instancia del método de la poda
             r,exp=mp.execute()#se ejecuta el método
             print '=================================='
@@ -325,7 +326,7 @@ if __name__ == '__main__':
         if ej==5:
             #Por hacer y mejorar
             #lcat=[[diametro,180],[peso,6],[color,'verde']]
-            #ob=mc.Objeto('ob1',mc.creaCaracteristicas(lcat))#creo el objeto
+            #ob=kmod.Objeto('ob1',kmod.creaCaracteristicas(lcat))#creo el objeto
             #cl = Clasificacion(bccf,ob)
             #print cl.bc
             #print cl.bc.clases()
@@ -333,16 +334,3 @@ if __name__ == '__main__':
 
 
         cont = raw_input('Desea continuar(s/n): ')
-
-
-
-
-
-
-
-
-
-
-
-
-
