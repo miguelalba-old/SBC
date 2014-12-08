@@ -124,3 +124,40 @@ class Caracteristica():
     def __init__(self,atributo,valor):
         self.atributo=atributo
         self.valor=valor
+
+
+# Funciones
+def creaCaracteristicas(lct=[[Atributo('diametro','int','cm'),30]]):
+    '''Dada una lista de atributos en forma de lista donde
+    se especifica el  atributo y el valor
+   se crean las inancias de dichos atributos
+    @return: Devuelve una lista de caracteristicas.
+    '''
+    print lct
+    carats=[]
+    for ct in lct:
+        print ct[0],ct[1]
+        caract=Caracteristica(ct[0],ct[1])
+        carats.append(caract)
+    return carats
+
+def creaAtributosBC(lat=[('diametro','int','unidad')]):
+    '''Dada una lista de atributos en forma de tupla donde
+    se especifica el nombre del atributo, el tipo se  obtiene la lista de
+    atributos con la que se trabaja en la base de conocimiento.'''
+    ats=[]
+    for at in lat:
+        nat=Atributo(at[0],at[1],at[2])
+        ats.append(nat)
+    return ats
+
+
+
+def buscaReglaComparableEnUnaClase(ct,clase):
+    for r in clase.reglas:
+        if r.atributo.nombre==ct.atributo.nombre:
+            rb=r
+            break
+
+    print rb.atributo.nombre
+    return rb
