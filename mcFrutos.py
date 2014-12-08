@@ -82,14 +82,8 @@ class Sandia(Fruto):
 #-----------------------FUNCIONES----------------------------------------------
 
 def clases():
-    '''
-    Crea una lista de clases candidatas de la base de conocimiento.
-    '''
-    naranja=Naranja()
-    limon=Limon()
-    sandia=Sandia()
-    lClases=[naranja,limon,sandia]
-    return lClases
+    """Crea una lista de clases candidatas de la base de conocimiento."""
+    return Naranja(), Limon(), Sandia()
 
 
 if __name__ == '__main__':

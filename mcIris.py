@@ -77,15 +77,8 @@ class Versicolor(Flor):
 
 #-----------------------FUNCIONES----------------------------------------------
 def clases():
-    '''
-    Crea una lista de clases candidatas de la base de conocimiento.
-    '''
-    #Setosa,Virginica, Versicolor
-    setosa=Setosa()
-    virginica=Virginica()
-    versicolor=Versicolor()
-    lClases=[setosa,virginica,versicolor]
-    return lClases
+    """Crea una lista de clases candidatas de la base de conocimiento."""
+    return Setosa(), Virginica(), Versicolor()
 
 
 if __name__ == '__main__':
