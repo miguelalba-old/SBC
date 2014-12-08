@@ -19,56 +19,50 @@ class Flor(kmod.Clase):
     atLP = kmod.Atributo('Largo petalo', 'int', 'mm')
     atributos = [atAS, atLS, atAP, atLP]
 
-    def __init__(self,nombre):
+    def __init__(self, nombre):
         '''
         @param nombre: Nombre de la flor
         '''
         kmod.Clase.__init__(self,nombre=nombre)
 
         #Se establece la lista de atributos que posee esta clase
-        self.atributos=[self.atAS,self.atLS,self.atAP,self.atLP]
+        self.atributos = [self.atAS, self.atLS, self.atAP, self.atLP]
 
-#Setosa,Virginica, Versicolor
+
 class Setosa(Flor):
-    '''
-    El objeto es una naranja si su color es naranja, el peso
-    debe de estar en un rango determinado y el diametro debe
-    de estar en un rango determinado.
 
-    '''
     def __init__(self):
-        Flor.__init__(self,nombre='setosa')# Se inicia con el nombre naranja
+        super(Setosa, self).__init__('setosa')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='rango',subtipo=None,atributo=self.atAS,valorEsperado=[10,30])
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.atLS,valorEsperado=[100,120])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.atAP,valorEsperado=[10,40])
-        r4=kmod.Rverifica(idRegla='r4',tipo='rango',subtipo=None,atributo=self.atLP,valorEsperado=[90,100])
-
-        self.reglas=[r1,r2,r3,r4]
+        r1 = kmod.Rverifica('r1', 'rango', None, self.atAS, [10, 30])
+        r2 = kmod.Rverifica('r2', 'rango', None, self.atLS, [100, 120])
+        r3 = kmod.Rverifica('r3', 'rango', None, self.atAP, [10, 40])
+        r4 = kmod.Rverifica('r4', 'rango', None, self.atLP, [90, 100])
+        self.reglas = [r1, r2, r3, r4]
 
 
 class Virginica(Flor):
+
     def __init__(self):
-        Flor.__init__(self,nombre='vrginica')
+        super(Virginica, self).__init__('vrginica')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='rango',subtipo=None,atributo=self.atAS,valorEsperado=[10,30])
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.atLS,valorEsperado=[100,200])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.atAP,valorEsperado=[10,30])
-        r4=kmod.Rverifica(idRegla='r4',tipo='rango',subtipo=None,atributo=self.atLP,valorEsperado=[100,200])
-
-        self.reglas=[r1,r2,r3,r4]
+        r1 = kmod.Rverifica('r1', 'rango', None, self.atAS, [10, 30])
+        r2 = kmod.Rverifica('r2', 'rango', None, self.atLS, [100, 200])
+        r3 = kmod.Rverifica('r3', 'rango', None, self.atAP, [10, 30])
+        r4 = kmod.Rverifica('r4', 'rango', None, self.atLP, [100, 200])
+        self.reglas = [r1, r2, r3, r4]
 
 
 class Versicolor(Flor):
+
     def __init__(self):
-        Flor.__init__(self,nombre='versicolor')
+        super(Versicolor, self).__init__('versicolor')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='rango',subtipo=None,atributo=self.atAS,valorEsperado=[10,30])
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.atLS,valorEsperado=[100,200])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.atAP,valorEsperado=[10,30])
-        r4=kmod.Rverifica(idRegla='r4',tipo='rango',subtipo=None,atributo=self.atLP,valorEsperado=[100,200])
-
-        self.reglas=[r1,r2,r3,r4]
+        r1 = kmod.Rverifica('r1', 'rango', None, self.atAS, [10, 30])
+        r2 = kmod.Rverifica('r2', 'rango', None, self.atLS, [100, 200])
+        r3 = kmod.Rverifica('r3', 'rango', None, self.atAP, [10, 30])
+        r4 = kmod.Rverifica('r4', 'rango', None, self.atLP, [100, 200])
+        self.reglas = [r1, r2, r3, r4]
 
 
 #-----------------------FUNCIONES----------------------------------------------
