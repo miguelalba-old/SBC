@@ -10,6 +10,7 @@ from kmod import Clase
 from kmod import Regla
 from kmod import Rverifica
 from kmod import Objeto
+from kmod import Atributo
 
 
 #----LAS CLASES DE LA BASE DE CONOCIMIENTO DE FRUTOS-----------
@@ -75,16 +76,6 @@ class Sandia(Fruto):
 
 
 #------------------------LOS ATRIBUTOS-----------------------------------------
-class Atributo():
-    '''Clase Atributo. permite especificar las propiedades
-    de los atributos que van a usarse en la base de conocimiento para
-    describir un objeto.
-    '''
-    def __init__(self,nombre,tipo,unidad):
-        self.nombre=nombre
-        self.tipo=tipo
-        self.unidad=unidad
-
 class Caracteristica():
     u'''Clase característica que establece el valor para un atributo'''
     def __init__(self,atributo,valor):

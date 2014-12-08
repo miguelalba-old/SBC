@@ -106,3 +106,14 @@ class Objeto():
         print 'Identificador= ',self.identificador
         for ct in self.caracteristicas:
             print ct.atributo.nombre, ct.atributo.tipo, ct.valor, ct.atributo.unidad
+
+
+class Atributo():
+    '''Clase Atributo. permite especificar las propiedades
+    de los atributos que van a usarse en la base de conocimiento para
+    describir un objeto.
+    '''
+    def __init__(self,nombre,tipo,unidad):
+        self.nombre=nombre
+        self.tipo=tipo
+        self.unidad=unidad
