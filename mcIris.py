@@ -5,38 +5,42 @@ Created on Sun Jan 19 12:19:10 2014
 
 @author: acalvo
 """
+
+from kmod import Clase
+
+
 #----LA CLASE GENERAL -------------------------------------------
-class Clase():
-    u'''Clase en la jerarquía más alta.
-    '''
-    def __init__(self,nombre):
-        u'''
-        @param: Nombre de la clase.
-        '''
-        self.nombre=nombre #La clase tiene un nombre
-        self.reglas=[]#Lista de reglas que caracteriza a la clase
-        #self.reglas=reglas #los elementos de la clase deben de cumplir unas reglas
-    def descripcion(self):
-        '''Devuelve el texto de la descripción de una clase.
-        
-        '''
-        descripcion=u''
-        #print 'Nombre: ', self.nombre
-        descripcion+=self.nombre+'\n'
-        for r in self.reglas:
-            #print r.idRegla,r.tipo, r.subtipo, r.atributo.nombre, r.valorEsperado
-            descripcion+=r.idRegla+' '+r.tipo+' '+ 'None' +' ' + r.atributo.nombre+' '
-            if isinstance(r.valorEsperado,str):
-                descripcion+=' '+r.valorEsperado+'\n'
-            elif isinstance(r.valorEsperado,int)or isinstance(r.valorEsperado,float):
-                descripcion+=' '+str(r.valorEsperado)+'\n'
-            elif isinstance(r.valorEsperado,list):
-                for i in r.valorEsperado:
-                    descripcion+=' '+str(i)+' '
-                descripcion+='\n'
-        return descripcion    
-                
-    
+#class Clase():
+#    u'''Clase en la jerarquía más alta.
+#    '''
+#    def __init__(self,nombre):
+#        u'''
+#        @param: Nombre de la clase.
+#        '''
+#        self.nombre=nombre #La clase tiene un nombre
+#        self.reglas=[]#Lista de reglas que caracteriza a la clase
+#        #self.reglas=reglas #los elementos de la clase deben de cumplir unas reglas
+#    def descripcion(self):
+#        '''Devuelve el texto de la descripción de una clase.
+#
+#        '''
+#        descripcion=u''
+#        #print 'Nombre: ', self.nombre
+#        descripcion+=self.nombre+'\n'
+#        for r in self.reglas:
+#            #print r.idRegla,r.tipo, r.subtipo, r.atributo.nombre, r.valorEsperado
+#            descripcion+=r.idRegla+' '+r.tipo+' '+ 'None' +' ' + r.atributo.nombre+' '
+#            if isinstance(r.valorEsperado,str):
+#                descripcion+=' '+r.valorEsperado+'\n'
+#            elif isinstance(r.valorEsperado,int)or isinstance(r.valorEsperado,float):
+#                descripcion+=' '+str(r.valorEsperado)+'\n'
+#            elif isinstance(r.valorEsperado,list):
+#                for i in r.valorEsperado:
+#                    descripcion+=' '+str(i)+' '
+#                descripcion+='\n'
+#        return descripcion
+
+
 #----LAS CLASES DE LA BASE DE CONOCIMIENTO DE FRUTOS-----------
 class Flor(Clase):
     '''Describe los atributos por los que se caracterizará a un fruto.
@@ -46,13 +50,13 @@ class Flor(Clase):
         @param nombre: Nombre de la flor
         '''
         Clase.__init__(self,nombre=nombre)
-        
+
         self.atAS=Atributo('Ancho sepalo','int','mm')
         self.atLS=Atributo('Largo sepalo','int','mm')
         self.atAP=Atributo('Ancho petalo','int','mm')
         self.atLP=Atributo('Largo petalo','int','mm')
- 
-        
+
+
         #Se establece la lista de atributos que posee esta clase
         self.atributos=[self.atAS,self.atLS,self.atAP,self.atLP]
 
@@ -62,7 +66,7 @@ class Setosa(Flor):
     El objeto es una naranja si su color es naranja, el peso
     debe de estar en un rango determinado y el diametro debe
     de estar en un rango determinado.
-    
+
     '''
     def __init__(self):
         Flor.__init__(self,nombre='setosa')# Se inicia con el nombre naranja
@@ -73,7 +77,7 @@ class Setosa(Flor):
         r4=Rverifica(idRegla='r4',tipo='rango',subtipo=None,atributo=self.atLP,valorEsperado=[90,100])
         self.reglas=[r1,r2,r3,r4]
         pass
-        
+
 class Virginica(Flor):
     def __init__(self):
         Flor.__init__(self,nombre='vrginica')
@@ -94,8 +98,8 @@ class Versicolor(Flor):
         r4=Rverifica(idRegla='r4',tipo='rango',subtipo=None,atributo=self.atLP,valorEsperado=[100,200])
         self.reglas=[r1,r2,r3,r4]
 
-        
-         
+
+
 
 #-----------------------TIPOS DE REGLAS----------------------------------------
 class Regla():
@@ -106,11 +110,11 @@ class Regla():
         self.idRegla=idRegla
         self.tipo=tipo
         pass
-    
+
 class Rverifica(Regla):
     '''
-    Esta regla verifica si los valores de un atributo satisfacen 
-    las restricciones de la regla de la clase. P.e. 
+    Esta regla verifica si los valores de un atributo satisfacen
+    las restricciones de la regla de la clase. P.e.
     -  La clase naranja debe de tener el atributo cuyo nombre es color naranja
     '''
     def __init__(self,idRegla,tipo,subtipo,atributo,valorEsperado):
@@ -129,16 +133,16 @@ class Rverifica(Regla):
                     return True
                 else:
                     return False
-                    
+
             if self.tipo=='rango':#Si el atributo es de tipo rango
                 print 'evaluo rango'
                 if at.valor <self.valorEsperado[1] and at.valor >=self.valorEsperado[0]:
                     return True
                 else:
                     return False
-        else:               
+        else:
             return None
-            
+
     def descripcion(self):
         descripcion=u''
         descripcion+='idRegla: '+self.idRegla+'\n'
@@ -151,15 +155,15 @@ class Rverifica(Regla):
         elif isinstance(self.valorEsperado,list) :
             for ve in self.valorEsperado:
                 descripcion+='Valor esperado: '+str(self.valorEsperado)+'  '
-                
+
         return descripcion
         #print 'idRegla: ',self.idRegla
         #print 'Tipo: ',self.tipo
         #print 'Atributo: ', self.atributo.nombre
         #print 'Valor esperado: ', self.valorEsperado
-        
-        
-                                                                                                                                            
+
+
+
 
 
 
@@ -177,10 +181,10 @@ class Objeto():
         print 'Identificador= ',self.identificador
         for ct in self.caracteristicas:
             print ct.atributo.nombre, ct.atributo.tipo, ct.valor, ct.atributo.unidad
-#------------------------LOS ATRIBUTOS----------------------------------------- 
+#------------------------LOS ATRIBUTOS-----------------------------------------
 class Atributo():
     '''Clase Atributo. permite especificar las propiedades
-    de los atributos que van a usarse en la base de conocimiento para 
+    de los atributos que van a usarse en la base de conocimiento para
     describir un objeto.
     '''
     def __init__(self,nombre,tipo,unidad):
@@ -193,13 +197,13 @@ class Caracteristica():
     def __init__(self,atributo,valor):
         self.atributo=atributo
         self.valor=valor
-        
+
 
 
 #-----------------------FUNCIONES----------------------------------------------
 
 
-    
+
 def clases():
     '''
     Crea una lista de clases candidatas de la base de conocimiento.
@@ -211,7 +215,7 @@ def clases():
     lClases=[setosa,virginica,versicolor]
     return lClases
 
-    
+
 def creaCaracteristicas(lct=[[Atributo('diametro','int','cm'),30]]):
     '''Dada una lista de atributos en forma de lista donde
     se especifica el  atributo y el valor
@@ -224,10 +228,10 @@ def creaCaracteristicas(lct=[[Atributo('diametro','int','cm'),30]]):
         caract=Caracteristica(ct[0],ct[1])
         carats.append(caract)
     return carats
-    
+
 def creaAtributosBC(lat=[('atAS','int','mm')]):
     '''Dada una lista de atributos en forma de tupla donde
-    se especifica el nombre del atributo, el tipo se  obtiene la lista de 
+    se especifica el nombre del atributo, el tipo se  obtiene la lista de
     atributos con la que se trabaja en la base de conocimiento.'''
     ats=[]
     for at in lat:
@@ -243,22 +247,22 @@ def buscaReglaComparableEnUnaClase(ct,clase):
         if r.atributo.nombre==ct.atributo.nombre:
             rb=r
             break
-                    
+
     print rb.atributo.nombre
     return rb
-    
+
 
 if __name__ == '__main__':
     cont='s'
     while cont=='s':
         ej=input('Entre la prueba (1,2,3,4,5):' )
-        
+
         if ej==1:#Crea la lista de atributos que va a usar la base de conocimiento
             atributos=creaAtributosBC([('atAS','int','mm'),('atLS','int','mm'),('atAP','int','mm'),('atLP','int','mm')])
             print atributos
             for at in atributos:
                 print at.nombre, at.tipo, at.unidad
-                
+
         if ej==2:#Crear un objeto porporcionando una lista de atributos
             lcts=[]
             ct1=Caracteristica(Atributo('atAS','int','mm'),30)
@@ -268,7 +272,7 @@ if __name__ == '__main__':
             ob=Objeto('ob1',lcts) #Crea el objeto
             for ct in ob.caracteristicas:
                 print ct.atributo.nombre,ct.atributo.tipo, ct.valor,ct.atributo.unidad
-            print 
+            print
             ob.describeObjeto()
             #print clases()
         if ej==25:#Crear un conjunto de características
@@ -276,46 +280,46 @@ if __name__ == '__main__':
             print c1.atributo.nombre, c1.atributo.tipo,c1.atributo.unidad,c1.valor
             pass
         if ej==3:#Crea un objeto pasando su identificador y los valores de los atributos
-            
+
             lct=[[Atributo('atAS','int','mm'),30],[Atributo('atAP','int','mm'),30],[Atributo('atLP','int','mm'),45]]
             print lct
             llct=creaCaracteristicas(lct)#Se crean instancias de la lista de atributos
             ob=Objeto('p1',llct)#se crea un objeto a partir de las instancias de la lista de atributos
             ob.describeObjeto()#de describe el objeto.
- 
+
             pass
         if ej==4:
             print clases()
             for c in clases():
                 print c.nombre
             cls=clases()
-            
+
         if ej==5:
-           
+
             cVirginica=Virginica()
             print 'descripcion de Naranja', cVirginica.descripcion()
             lct=[[Atributo('Ancho Sepalo','int','mm'),30],[Atributo('Largo sepalo','int','mm'),30],[Atributo('Ancho petalo','int','mm'),45]]
             print lct
             llct=creaCaracteristicas(lct)#Se crean instancias de la lista de atributos
 
-            
+
             ob=Objeto('p1',llct)#se crea un objeto a partir de las instancias de la lista de atributos
             ob.describeObjeto()#de describe el objeto.
-            
+
             #r2.descripcion()
             #print r2.execute(ob.atributos[1])
-            
+
             #Probar si los atributos de un objeto satisface una regla comparable de una clase
             #Buscar una ragla comparable para un atributo de una regla
             #for r in cNaranja.reglas:
             #    if r.atributo.nombre==ob.atributos[1].nombre:
             #        rb=r
             #        break
-                    
+
             #print rb.atributo.nombre
             #print
             #print 'buscando regla'
             rb=buscaReglaComparableEnUnaClase(ob.caracteristicas[2],cVirginica)
-                        
+
         cont = raw_input('Desea continuar(s/n): ')
-        
+
