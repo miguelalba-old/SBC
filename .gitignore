@@ -52,3 +52,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Rope project (generated with vim plugin python-mode)
+.ropeproject/
