@@ -145,12 +145,7 @@ def creaAtributosBC(lat=[('diametro','int','unidad')]):
     '''Dada una lista de atributos en forma de tupla donde
     se especifica el nombre del atributo, el tipo se  obtiene la lista de
     atributos con la que se trabaja en la base de conocimiento.'''
-    ats=[]
-    for at in lat:
-        nat=Atributo(at[0],at[1],at[2])
-        ats.append(nat)
-    return ats
-
+    return [Atributo(at[0], at[1], at[2]) for at in lat]
 
 
 def buscaReglaComparableEnUnaClase(ct,clase):
