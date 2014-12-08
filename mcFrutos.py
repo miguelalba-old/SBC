@@ -11,19 +11,20 @@ import kmod
 
 #----LAS CLASES DE LA BASE DE CONOCIMIENTO DE FRUTOS-----------
 class Fruto(kmod.Clase):
-    '''Describe los atributos por los que se caracterizará a un fruto.
-    '''
+    """Describe los atributos por los que se caracterizará a un fruto."""
+
+    color = kmod.Atributo('color', 'str', None)
+    diametro = kmod.Atributo('diametro', 'int', 'cm')
+    peso = kmod.Atributo('peso', 'int', 'gr')
+
+    atributos = [color, peso, diametro]
+
     def __init__(self,nombre):
         '''
         @param nombre: Nombre del fruto
         '''
         kmod.Clase.__init__(self,nombre=nombre)
 
-        atColor=kmod.Atributo('color','str',None)
-        atDiametro=kmod.Atributo('diametro','int','cm')
-        atPeso=kmod.Atributo('peso','int','gr')
-        #Se establece la lista de atributos que posee esta clase
-        self.atributos=[atColor,atPeso,atDiametro]
 
 class Naranja(Fruto):
     '''
@@ -34,40 +35,32 @@ class Naranja(Fruto):
     '''
     def __init__(self):
         Fruto.__init__(self,nombre='naranja')# Se inicia con el nombre naranja
-        #Reglas que debe de verificar la naranja
-        atColor=kmod.Atributo('color','str',None)
-        atDiametro=kmod.Atributo('diametro','int','cm')
-        atPeso=kmod.Atributo('peso','int','gr')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=atColor,valorEsperado='naranja')
+        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=self.color,valorEsperado='naranja')
         #El diametro debe de estar entre 10 y 30
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=atDiametro,valorEsperado=[10,30])
+        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.diametro,valorEsperado=[10,30])
         #el peso debe de estar entre 100 y 200
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=atPeso,valorEsperado=[100,200])
+        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.peso,valorEsperado=[100,200])
         self.reglas=[r1,r2,r3]
         pass
 
 class Limon(Fruto):
     def __init__(self):
         Fruto.__init__(self,nombre='limon')
-        atColor=kmod.Atributo('color','str',None)
-        atDiametro=kmod.Atributo('diametro','int','cm')
-        atPeso=kmod.Atributo('peso','int','gr')
-        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=atColor,valorEsperado='amarillo')
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=atDiametro,valorEsperado=[10,30])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=atPeso,valorEsperado=[100,200])
+
+        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=self.color,valorEsperado='amarillo')
+        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.diametro,valorEsperado=[10,30])
+        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.peso,valorEsperado=[100,200])
         self.reglas=[r1,r2,r3]
 
 
 class Sandia(Fruto):
     def __init__(self):
         Fruto.__init__(self,nombre='sandia')
-        atColor=kmod.Atributo('color','str',None)
-        atDiametro=kmod.Atributo('diametro','int','cm')
-        atPeso=kmod.Atributo('peso','int','gr')
-        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=atColor,valorEsperado='verde')
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=atDiametro,valorEsperado=[100,300])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=atPeso,valorEsperado=[1000,8000])
+
+        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=self.color,valorEsperado='verde')
+        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.diametro,valorEsperado=[100,300])
+        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.peso,valorEsperado=[1000,8000])
         self.reglas=[r1,r2,r3]
 
 
