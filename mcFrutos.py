@@ -34,33 +34,31 @@ class Naranja(Fruto):
 
     '''
     def __init__(self):
-        Fruto.__init__(self,nombre='naranja')# Se inicia con el nombre naranja
+        super(Fruto, self).__init__('naranja')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=self.color,valorEsperado='naranja')
-        #El diametro debe de estar entre 10 y 30
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.diametro,valorEsperado=[10,30])
-        #el peso debe de estar entre 100 y 200
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.peso,valorEsperado=[100,200])
+        r1 = kmod.Rverifica('r1', 'igual', None, self.color, 'naranja')
+        r2 = kmod.Rverifica('r2', 'rango', None, self.diametro, [10,30])
+        r3 = kmod.Rverifica('r3', 'rango', None, self.peso, [100,200])
         self.reglas=[r1,r2,r3]
-        pass
+
 
 class Limon(Fruto):
     def __init__(self):
-        Fruto.__init__(self,nombre='limon')
+        super(Fruto, self).__init__('limon')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=self.color,valorEsperado='amarillo')
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.diametro,valorEsperado=[10,30])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.peso,valorEsperado=[100,200])
+        r1 = kmod.Rverifica('r1', 'igual', None, self.color, 'amarillo')
+        r2 = kmod.Rverifica('r2', 'rango', None, self.diametro, [10,30])
+        r3 = kmod.Rverifica('r3', 'rango', None, self.peso, [100,200])
         self.reglas=[r1,r2,r3]
 
 
 class Sandia(Fruto):
     def __init__(self):
-        Fruto.__init__(self,nombre='sandia')
+        super(Fruto, self).__init__('sandia')
 
-        r1=kmod.Rverifica(idRegla='r1',tipo='igual',subtipo=None,atributo=self.color,valorEsperado='verde')
-        r2=kmod.Rverifica(idRegla='r2',tipo='rango',subtipo=None,atributo=self.diametro,valorEsperado=[100,300])
-        r3=kmod.Rverifica(idRegla='r3',tipo='rango',subtipo=None,atributo=self.peso,valorEsperado=[1000,8000])
+        r1 = kmod.Rverifica('r1', 'igual', None, self.color, 'verde')
+        r2 = kmod.Rverifica('r2', 'rango', None, self.diametro, [100,300])
+        r3 = kmod.Rverifica('r3', 'rango', None, self.peso, [1000,8000])
         self.reglas=[r1,r2,r3]
 
 
