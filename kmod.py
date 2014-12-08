@@ -72,18 +72,12 @@ class Rverifica(Regla):
         # Deben de coincidor los nombres de los atributos
         if self.atributo.nombre == at.nombre:
             if self.tipo == 'igual':  # Si el atributo es de tipo igual
-                if self.valorEsperado == at.valor:
-                    return True
-                else:
-                    return False
+                return self.valorEsperado == at.valor
 
             if self.tipo == 'rango':  # Si el atributo es de tipo rango
                 print 'evaluo rango'
-                if (at.valor < self.valorEsperado[1] and
-                        at.valor >= self.valorEsperado[0]):
-                    return True
-                else:
-                    return False
+                return at.valor in range(self.valorEsperado[0],
+                                         self.valorEsperado[1])
         else:
             return None
 
@@ -149,7 +143,7 @@ class Caracteristica():
 def creaCaracteristicas(lct=[[Atributo('diametro', 'int', 'cm'), 30]]):
     '''Dada una lista de atributos en forma de lista donde
     se especifica el  atributo y el valor
-   se crean las inancias de dichos atributos
+    se crean las inancias de dichos atributos
     @return: Devuelve una lista de caracteristicas.
     '''
     print lct
