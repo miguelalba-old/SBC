@@ -34,7 +34,7 @@ class Naranja(Fruto):
 
     '''
     def __init__(self):
-        super(Fruto, self).__init__('naranja')
+        super(Naranja, self).__init__('naranja')
 
         r1 = kmod.Rverifica('r1', 'igual', None, self.color, 'naranja')
         r2 = kmod.Rverifica('r2', 'rango', None, self.diametro, [10,30])
@@ -44,7 +44,7 @@ class Naranja(Fruto):
 
 class Limon(Fruto):
     def __init__(self):
-        super(Fruto, self).__init__('limon')
+        super(Limon, self).__init__('limon')
 
         r1 = kmod.Rverifica('r1', 'igual', None, self.color, 'amarillo')
         r2 = kmod.Rverifica('r2', 'rango', None, self.diametro, [10,30])
@@ -54,7 +54,7 @@ class Limon(Fruto):
 
 class Sandia(Fruto):
     def __init__(self):
-        super(Fruto, self).__init__('sandia')
+        super(Sandia, self).__init__('sandia')
 
         r1 = kmod.Rverifica('r1', 'igual', None, self.color, 'verde')
         r2 = kmod.Rverifica('r2', 'rango', None, self.diametro, [100,300])
