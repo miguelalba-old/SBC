@@ -25,9 +25,6 @@ class Flor(kmod.Clase):
         '''
         kmod.Clase.__init__(self,nombre=nombre)
 
-        #Se establece la lista de atributos que posee esta clase
-        self.atributos = [self.atAS, self.atLS, self.atAP, self.atLP]
-
 
 class Setosa(Flor):
 

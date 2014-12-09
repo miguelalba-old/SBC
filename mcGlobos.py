@@ -5,10 +5,10 @@ import kmod
 
 class EstadoGlobo(kmod.Clase):
 
-    color = kmod.Atributo('Color', 'str', None)
-    size = kmod.Atributo('Size', 'str', None)
-    act = kmod.Atributo('Act', 'str', None)
-    age = kmod.Atributo('Age', 'str', None)
+    color = kmod.Atributo('Color', 'str', None)  # YELLOW, PURPLE
+    size = kmod.Atributo('Size', 'str', None)  # LARGE, SMALL
+    act = kmod.Atributo('Act', 'str', None)  # STRETCH, DIP
+    age = kmod.Atributo('Age', 'str', None)  # ADULT, CHILD
     atributos = (color, size, act, age)
 
     def __init__(self, nombre):
@@ -28,3 +28,7 @@ class Desinflado(EstadoGlobo):
         super(Desinflado, self).__init__('desinflado')
         act_rule = kmod.Rverifica('r1', 'igual', None, self.act, 'DIP')
         self.reglas = (act_rule, )
+
+
+def clases():
+    return Inflado(), Desinflado()
