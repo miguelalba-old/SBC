@@ -41,6 +41,17 @@ caracteristicas = kmod.creaCaracteristicas(
 globo = kmod.Objeto('ob3', caracteristicas)
 ob.describeObjeto()
 
+# Ebola (mcEbola)
+import mcEbola
+caracteristicas = kmod.creaCaracteristicas(
+    ((mcEbola.EstadoPasajero.temperatura, 38),
+     (mcEbola.EstadoPasajero.pais, 'RIESGO'),
+     (mcEbola.EstadoPasajero.contacto, 'NO')))
+ebola = kmod.Objeto('ob4', caracteristicas)
+ob.describeObjeto()
+
+
+
 app = QtGui.QApplication(sys.argv)
-form = ckVtsClasificacion.ClasificacionDlg(globo)
+form = ckVtsClasificacion.ClasificacionDlg(ebola)
 sys.exit(app.exec_())

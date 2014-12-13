@@ -8,7 +8,8 @@ Created on Sun Jan 19 12:19:10 2014
 import kmod
 #import mcFrutos as mc #Cambiar al cambiar el MC
 #import mcIris as mc #Cambiar al cambiar el MC
-import mcGlobos as mc
+#import mcGlobos as mc
+import mcEbola as mc
 
 class Tarea():
     def __init__(self):
