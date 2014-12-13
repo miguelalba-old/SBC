@@ -8,208 +8,176 @@ Created on Sat Jan 18 11:29:53 2014
 
 
 import sys
+
 from PyQt4 import QtCore
 from PyQt4 import QtGui
+
 import ckCtrlClasificacion as ctrl
 
-#import mcIris as mc    #Cambiar al cambiar el MC
+# import mcIris as mc    #Cambiar al cambiar el MC
 
 
 class ClasificacionDlg(QtGui.QWidget):
-    def __init__(self,objeto=None):
+
+    def __init__(self, objeto=None):
         super(ClasificacionDlg, self).__init__()
-        self.objeto=objeto
-        #Label
-        labelTableWidgetObjeto=QtGui.QLabel("Objeto",self)
-        labelClasesCandidatas=QtGui.QLabel("Clases candidatas",self)
-        labelTextDescripcionClases=QtGui.QLabel(u"Descripción de las clases",self)
+        self.objeto = objeto
 
+        # boxes labels
+        object_label = QtGui.QLabel("Objeto", self)
+        candidate_classes_label = QtGui.QLabel("Clases candidatas", self)
+        class_description_label = QtGui.QLabel(
+            u"Descripción de las clases", self)
+        selected_class_label = QtGui.QLabel("Clases seleccionadas", self)
+        results_label_L = QtGui.QLabel(
+            u"Justificación de la clasificación", self)
+        results_label_R = QtGui.QLabel(u"", self)
+        method_label = QtGui.QLabel(u"Método", self)
 
-        labelListClasesSeleccionadas=QtGui.QLabel("Clases seleccionadas",self)
-        labelTextjustificacionL=QtGui.QLabel(u"Justificación de la clasificación",self)
-        labelTextjustificacionR=QtGui.QLabel(u"",self)
+        # Widget
+        table_headers = ['ATRIBUTO', 'VALOR']
 
-        labelComboxMetodo=QtGui.QLabel(u"Método",self)
+        # Crea la tabla de elementos observables de dos columnas
+        self.object_widget = QtGui.QTableWidget(
+            len(objeto.caracteristicas), 2)
+        self.object_widget.setColumnWidth(0, 140)  # 1st col width
+        self.object_widget.setColumnWidth(1, 200)  # 2nd col width
+        self.object_widget.setHorizontalHeaderLabels(table_headers)
 
-        #Widget
-        header = ['ATRIBUTO', 'VALOR']
-        #posiblesFallos = Fallos(self,   observables_list, header)
-        self.tableWidgetObjeto = QtGui.QTableWidget(len(objeto.caracteristicas),2) #Crea la tabla de elementos observables de dps columnas
-        self.tableWidgetObjeto.setColumnWidth(0, 140) #Asignan ancho a las columnas
-        self.tableWidgetObjeto.setColumnWidth(1, 200) #Asignan ancho a las columnas
-        self.tableWidgetObjeto.setHorizontalHeaderLabels(header) #Asigna etiquetas a las columnas
-        #print observables
-        i=0
-        for at in objeto.caracteristicas:
-            print at
-            print  at.atributo.nombre,at.atributo.tipo, at.valor,type(at.valor),at.atributo.unidad#,
-            item1 = QtGui.QTableWidgetItem(at.atributo.nombre) #Crea un item y le asigna el nombre de la observable
-            #item1.setCheckState(QtCore.Qt.Checked) # Establece propiedades a las celdas de la primera columna de la tabla
-            item1.setFlags(QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled) #Establece propiedades a las celdas de la primera columna
+        for num_feature, feature in enumerate(objeto.caracteristicas):
+            item1 = QtGui.QTableWidgetItem(feature.atributo.nombre)
+            item1.setFlags(
+                QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled)
+            self.object_widget.setItem(num_feature, 0, item1)
 
-            if at.atributo.tipo=='multiple':#Si el tipo de observable es múltiple creamos un combox
-                combobox = QtGui.QComboBox()
-                #for j in observables[i].valoresPermitidos:#añadimmos al combox los valeores permitidos
-                 #   combobox.addItem(j)
-                #self.tableWidgetPosiblesFallos.setCellWidget(i, 1, combobox)#Establecemos en la celda i el combox
-            elif at.atributo.tipo=='boleano':#Si es boleano creamos otro combox con dos posibles valores
-                combobox = QtGui.QComboBox()
-                combobox.addItem('True')
-                combobox.addItem('False')
-                self.tableWidgetPosiblesFallos.setCellWidget(i, 1, combobox)
-            self.tableWidgetObjeto.setItem(i, 0, item1)#Establecemos el item en la columna 0
-            if  isinstance(at.valor,int):
-                item2 = QtGui.QTableWidgetItem(str(at.valor))
-            elif  isinstance(at.valor,str):
-                item2 = QtGui.QTableWidgetItem(at.valor)
-            self.tableWidgetObjeto.setItem(i, 1, item2)#Establecemos el item en la columna 0
-            i+=1
+            item2 = QtGui.QTableWidgetItem(str(feature.valor))
+            self.object_widget.setItem(num_feature, 1, item2)
 
-        #List
-        self.listWidgetClasesCandidatas = QtGui.QListWidget()
-        self.cc=ctrl.ma.mc.clases()
-        if self.cc is not None:
-            pass
-            stringList=[]
-            for c in self.cc:
-                stringList.append(c.nombre)
+        # Candidate classes box
+        self.candidate_classes_widget = QtGui.QListWidget()
+        self.candidate_classes = ctrl.ma.mc.clases()
+        if self.candidate_classes:
+            classes_names = [c.nombre for c in self.candidate_classes]
+            self.candidate_classes_widget.addItems(classes_names)
+            self.candidate_classes_widget.setCurrentRow(0)
 
-            self.listWidgetClasesCandidatas.addItems(stringList)
-            self.listWidgetClasesCandidatas.setCurrentRow(0)
+        # Class description box
+        self.class_description_widget = QtGui.QPlainTextEdit()
 
-        self.plainTextEditDescripcionClases = QtGui.QPlainTextEdit()#Cuadro de texto de descripcion de la clase
-        self.listWidgetClasesSeleccionadas = QtGui.QListWidget()
-        self.plainTextEditExplicacion = QtGui.QPlainTextEdit()#Cuadro de texto    de la explicación
+        # Selected class box
+        self.selected_class_widget = QtGui.QListWidget()
 
-        #Método
-        self.comboboxWidgetMetodo = QtGui.QComboBox()
-        self.comboboxWidgetMetodo.addItem('Poda')
-        self.comboboxWidgetMetodo.addItem('Semi Poda')
+        # Results box (widget with the classification output)
+        self.results_widget = QtGui.QPlainTextEdit()
 
-        #Botones
-        self.clasificarButtom=QtGui.QPushButton('Clasificar')
-        self.borrarButtom=QtGui.QPushButton('Borrar')
-        self.salirButtom=QtGui.QPushButton('Salir')
-        self.buttomsLayout = QtGui.QHBoxLayout()
-        self.buttomsLayout.addStretch()
-        self.buttomsLayout.addWidget(self.clasificarButtom)
-        self.buttomsLayout.addWidget(self.borrarButtom)
-        self.buttomsLayout.addWidget(self.salirButtom)
-        self.buttomsLayout.addStretch()
+        # Method box
+        self.method_widget = QtGui.QComboBox()
+        self.method_widget.addItem('Poda')
+        self.method_widget.addItem('Semi Poda')
 
-        #Rejilla de distribución de los controles
+        # Botones
+        classify_button = QtGui.QPushButton('Clasificar')
+        clear_button = QtGui.QPushButton('Borrar')
+        quit_button = QtGui.QPushButton('Salir')
+
+        buttons_layout = QtGui.QHBoxLayout()
+        buttons_layout.addStretch()
+        buttons_layout.addWidget(classify_button)
+        buttons_layout.addWidget(clear_button)
+        buttons_layout.addWidget(quit_button)
+        buttons_layout.addStretch()
+
+        # Rejilla de distribución de los controles
         grid = QtGui.QGridLayout()
         grid.setSpacing(5)
-        grid.addWidget(labelTableWidgetObjeto, 0, 0)
-        grid.addWidget(self.tableWidgetObjeto, 1, 0)
-        grid.addWidget(labelClasesCandidatas, 0, 1)
-        grid.addWidget(self.listWidgetClasesCandidatas, 1, 1)
-        grid.addWidget(labelTextDescripcionClases, 0, 2)
-        grid.addWidget(self.plainTextEditDescripcionClases, 1, 2)
+        grid.addWidget(object_label, 0, 0)
+        grid.addWidget(self.object_widget, 1, 0)
+        grid.addWidget(candidate_classes_label, 0, 1)
+        grid.addWidget(self.candidate_classes_widget, 1, 1)
+        grid.addWidget(class_description_label, 0, 2)
+        grid.addWidget(self.class_description_widget, 1, 2)
 
-        grid.addWidget(labelListClasesSeleccionadas, 2, 0)
+        grid.addWidget(selected_class_label, 2, 0)
 
+        grid.addWidget(results_label_L, 2, 1)
+        grid.addWidget(results_label_R, 2, 2)
+        grid.addWidget(self.results_widget, 3, 1, 3, 2)
 
-        grid.addWidget(labelTextjustificacionL, 2, 1)
-        grid.addWidget(labelTextjustificacionR, 2, 2)
-        grid.addWidget(self.plainTextEditExplicacion, 3, 1,3,2)
+        grid.addWidget(self.selected_class_widget, 3, 0)
 
-        grid.addWidget(self.listWidgetClasesSeleccionadas, 3, 0)
+        grid.addWidget(method_label, 4, 0)
+        grid.addWidget(self.method_widget, 5, 0)
 
-        grid.addWidget(labelComboxMetodo, 4, 0)
-        grid.addWidget(self.comboboxWidgetMetodo, 5, 0)
-
-
-
-
-        #Diseño principal
-        mainLayout = QtGui.QVBoxLayout()
-        mainLayout.addLayout(grid)
-        mainLayout.addLayout(self.buttomsLayout)
-        self.setLayout(mainLayout)
-
+        # Diseño principal
+        main_layout = QtGui.QVBoxLayout()
+        main_layout.addLayout(grid)
+        main_layout.addLayout(buttons_layout)
+        self.setLayout(main_layout)
 
         self.setGeometry(300, 300, 1200, 800)
         self.setWindowTitle(u"TAREA DE CLASIFICACION")
         self.show()
 
         self.center()
-        #Conexiones:
-        #==========
-        self.listWidgetClasesCandidatas.itemClicked.connect(self.showCc)
-        self.tableWidgetObjeto.itemChanged.connect(self.changeObj)
-        #self.generarButtom.clicked.connect(self.generar)
-        self.clasificarButtom.clicked.connect(self.clasificar)
-        self.borrarButtom.clicked.connect(self.plainTextEditExplicacion.clear)
-        self.salirButtom.clicked.connect(self.close)
 
-
-    def generar(self):
-        print 'generar'
-        ctrl.eventGenerar(self)
+        # Conexiones:
+        # ==========
+        self.candidate_classes_widget.itemClicked.connect(
+            self.show_candidate_classes)
+        self.object_widget.itemChanged.connect(self.change_object)
+        classify_button.clicked.connect(self.classify)
+        clear_button.clicked.connect(self.results_widget.clear)
+        quit_button.clicked.connect(self.close)
 
     def center(self):
+        "Center dialog"
         qr = self.frameGeometry()
         cp = QtGui.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def showCc(self):
-        row = self.listWidgetClasesCandidatas.currentRow()
-        #print row
-        #print self.cc[row].nombre
-        #print self.cc[row].descripcion()
-        self.plainTextEditDescripcionClases.clear()
-        self.plainTextEditDescripcionClases.appendPlainText(self.cc[row].descripcion())
-        pass
+    def show_candidate_classes(self):
+        "Update candidate classes box"
+        row = self.candidate_classes_widget.currentRow()
+        self.class_description_widget.clear()
+        self.class_description_widget.appendPlainText(
+            self.candidate_classes[row].descripcion())
 
-    def changeObj(self):
-        '''
-        Cambia los valores del objeto tomando los datos de la tabla.
-        '''
-        print 'objeto cambiado'
-        for i in range(self.tableWidgetObjeto.rowCount()):
-        #print i
-            item1=self.tableWidgetObjeto.item(i,0)
-            item2=self.tableWidgetObjeto.item(i,1)
-            print item1, item1.text(),self.objeto.caracteristicas[i].atributo.nombre,self.objeto.caracteristicas[i].valor
-            print item2, item2.text()
-            if self.objeto.caracteristicas[i].atributo.tipo=='str':
-                self.objeto.caracteristicas[i].valor=self.tableWidgetObjeto.item(i,1).text()
-            elif self.objeto.caracteristicas[i].atributo.tipo=='int':
-                print '---->',self.tableWidgetObjeto.item(i,1).text()
-                self.objeto.caracteristicas[i].valor=int(self.tableWidgetObjeto.item(i,1).text())
+    def change_object(self):
+        "Cambia los valores del objeto tomando los datos de la tabla."
+        for i in range(self.object_widget.rowCount()):
+            feature = self.objeto.caracteristicas[i]
+            feature_value = self.object_widget.item(i, 1).text()
+            if feature.atributo.tipo == 'int':
+                feature_value = int(feature_value)
+            feature.valor = feature_value
 
-        for at in self.objeto.caracteristicas:
-            print at.atributo.nombre, at.valor
-            pass
-
-    def clasificar(self):
-        print 'clasificar'
+    def classify(self):
+        "Classification event."
         ctrl.eventClasificar(self)
 
 
-
-
 if __name__ == "__main__":
-    import mcFrutos as mc #Cambiar al cambiar el MC
-    #import mcIris as mc #Cambiar al cambiar el MC
+    import mcFrutos as mc  # Cambiar al cambiar el MC
+    # import mcIris as mc #Cambiar al cambiar el MC
 
-    lct1=[[mc.Atributo('diametro','int','cm'),180],[mc.Atributo('peso','int','gr'),6000],[mc.Atributo('color','str',None),'verde']]
-    llct1=mc.creaCaracteristicas(lct1)
-    ob1=mc.Objeto('ob2',llct1)
+    lct1 = [
+        [mc.Atributo('diametro', 'int', 'cm'), 180],
+        [mc.Atributo('peso', 'int', 'gr'), 6000],
+        [mc.Atributo('color', 'str', None), 'verde']]
+    llct1 = mc.creaCaracteristicas(lct1)
+    ob1 = mc.Objeto('ob2', llct1)
     ob1.describeObjeto()
 
-
-    lct=[[mc.Atributo('Ancho sepalo','int','mm'),25],[mc.Atributo('Largo sepalo','int','mm'),110],[mc.Atributo('Ancho petalo','int','mm'),30],
-                  [mc.Atributo('Largo petalo','int','mm'),95]]
-    llct=mc.creaCaracteristicas(lct)
-    ob=mc.Objeto('ob1',llct)#creo el objeto
+    lct = [
+        [mc.Atributo('Ancho sepalo', 'int', 'mm'), 25],
+        [mc.Atributo('Largo sepalo', 'int', 'mm'), 110],
+        [mc.Atributo('Ancho petalo', 'int', 'mm'), 30],
+        [mc.Atributo('Largo petalo', 'int', 'mm'), 95]]
+    llct = mc.creaCaracteristicas(lct)
+    ob = mc.Objeto('ob1', llct)  # creo el objeto
     print ob
     ob.describeObjeto()
     app = QtGui.QApplication(sys.argv)
     form = ClasificacionDlg(ob1)
     sys.exit(app.exec_())
-
-
-
