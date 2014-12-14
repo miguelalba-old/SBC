@@ -155,29 +155,3 @@ class ClasificacionDlg(QtGui.QWidget):
     def classify(self):
         "Classification event."
         ctrl.eventClasificar(self)
-
-
-if __name__ == "__main__":
-    import mcFrutos as mc  # Cambiar al cambiar el MC
-    # import mcIris as mc #Cambiar al cambiar el MC
-
-    lct1 = [
-        [mc.Atributo('diametro', 'int', 'cm'), 180],
-        [mc.Atributo('peso', 'int', 'gr'), 6000],
-        [mc.Atributo('color', 'str', None), 'verde']]
-    llct1 = mc.creaCaracteristicas(lct1)
-    ob1 = mc.Objeto('ob2', llct1)
-    ob1.describeObjeto()
-
-    lct = [
-        [mc.Atributo('Ancho sepalo', 'int', 'mm'), 25],
-        [mc.Atributo('Largo sepalo', 'int', 'mm'), 110],
-        [mc.Atributo('Ancho petalo', 'int', 'mm'), 30],
-        [mc.Atributo('Largo petalo', 'int', 'mm'), 95]]
-    llct = mc.creaCaracteristicas(lct)
-    ob = mc.Objeto('ob1', llct)  # creo el objeto
-    print ob
-    ob.describeObjeto()
-    app = QtGui.QApplication(sys.argv)
-    form = ClasificacionDlg(ob1)
-    sys.exit(app.exec_())
