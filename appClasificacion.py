@@ -8,7 +8,7 @@ Created on Sat Jan 18 11:29:53 2014
 
 import sys
 from PyQt4 import QtGui
-import ckVtsClasificacion
+import view
 import kmod
 
 
@@ -51,7 +51,6 @@ ebola = kmod.Objeto('ob4', caracteristicas)
 ob.describeObjeto()
 
 
-
 app = QtGui.QApplication(sys.argv)
-form = ckVtsClasificacion.ClasificacionDlg(ebola)
+form = view.ClasificacionDlg(ebola)
 sys.exit(app.exec_())

@@ -7,12 +7,10 @@ Created on Sat Jan 18 11:29:53 2014
 """
 
 
-import sys
-
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
-import ckCtrlClasificacion as ctrl
+import controller as ctrl
 
 # import mcIris as mc    #Cambiar al cambiar el MC
 
