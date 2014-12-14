@@ -1,10 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-"""
-Created on Sun Jan 19 12:19:10 2014
-
-@author: acalvo
-"""
 
 import kmod
 
@@ -68,74 +62,9 @@ def clases():
     return Setosa(), Virginica(), Versicolor()
 
 
-if __name__ == '__main__':
-    cont='s'
-    while cont=='s':
-        ej=input('Entre la prueba (1,2,3,4,5):' )
-
-        if ej==1:#Crea la lista de atributos que va a usar la base de conocimiento
-            atributos=kmod.creaAtributosBC([('atAS','int','mm'),('atLS','int','mm'),('atAP','int','mm'),('atLP','int','mm')])
-            print atributos
-            for at in atributos:
-                print at.nombre, at.tipo, at.unidad
-
-        if ej==2:#Crear un objeto porporcionando una lista de atributos
-            lcts=[]
-            ct1=kmod.Caracteristica(kmod.Atributo('atAS','int','mm'),30)
-            lcts.append(ct1)
-            ct2=kmod.Caracteristica(kmod.Atributo('atAP','int','mm'),60)
-            lcts.append(ct2)
-            ob=kmod.Objeto('ob1',lcts) #Crea el objeto
-            for ct in ob.caracteristicas:
-                print ct.atributo.nombre,ct.atributo.tipo, ct.valor,ct.atributo.unidad
-            print
-            ob.describeObjeto()
-            #print clases()
-        if ej==25:#Crear un conjunto de características
-            c1=kmod.Caracteristica(kmod.Atributo('atAS','int','mm'),30)
-            print c1.atributo.nombre, c1.atributo.tipo,c1.atributo.unidad,c1.valor
-            pass
-        if ej==3:#Crea un objeto pasando su identificador y los valores de los atributos
-
-            lct=[[kmod.Atributo('atAS','int','mm'),30],[kmod.Atributo('atAP','int','mm'),30],[kmod.Atributo('atLP','int','mm'),45]]
-            print lct
-            llct=kmod.creaCaracteristicas(lct)#Se crean instancias de la lista de atributos
-            ob=kmod.Objeto('p1',llct)#se crea un objeto a partir de las instancias de la lista de atributos
-            ob.describeObjeto()#de describe el objeto.
-
-            pass
-        if ej==4:
-            print clases()
-            for c in clases():
-                print c.nombre
-            cls=clases()
-
-        if ej==5:
-
-            cVirginica=Virginica()
-            print 'descripcion de Naranja', cVirginica.descripcion()
-            lct=[[kmod.Atributo('Ancho Sepalo','int','mm'),30],[kmod.Atributo('Largo sepalo','int','mm'),30],[kmod.Atributo('Ancho petalo','int','mm'),45]]
-            print lct
-            llct=kmod.creaCaracteristicas(lct)#Se crean instancias de la lista de atributos
-
-
-            ob=kmod.Objeto('p1',llct)#se crea un objeto a partir de las instancias de la lista de atributos
-            ob.describeObjeto()#de describe el objeto.
-
-            #r2.descripcion()
-            #print r2.execute(ob.atributos[1])
-
-            #Probar si los atributos de un objeto satisface una regla comparable de una clase
-            #Buscar una ragla comparable para un atributo de una regla
-            #for r in cNaranja.reglas:
-            #    if r.atributo.nombre==ob.atributos[1].nombre:
-            #        rb=r
-            #        break
-
-            #print rb.atributo.nombre
-            #print
-            #print 'buscando regla'
-            rb=kmod.buscaReglaComparableEnUnaClase(ob.caracteristicas[2],cVirginica)
-
-        cont = raw_input('Desea continuar(s/n): ')
-
+def create_initial_object():
+    "Create iris initial object."
+    initial_values = (25, 110, 30, 95)
+    features = (kmod.Caracteristica(att, val)
+                for att, val in zip(Flor.atributos, initial_values))
+    return kmod.Objeto('obj', features)

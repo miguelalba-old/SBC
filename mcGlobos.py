@@ -32,3 +32,11 @@ class Desinflado(EstadoGlobo):
 
 def clases():
     return Inflado(), Desinflado()
+
+
+def create_initial_object():
+    "Create fruit initial object."
+    initial_values = (180, 6000, 'verde')
+    features = (kmod.Caracteristica(att, val)
+                for att, val in zip(EstadoGlobo.atributos, initial_values))
+    return kmod.Objeto('obj', features)

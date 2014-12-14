@@ -192,3 +192,20 @@ class Especificar(Inferencia):
                     self.lAtributosUsados.append(at)
                     return at, self.lAtributosUsados
         return None, None
+
+
+class Model(object):
+    "Application model."
+
+    def __init__(self):
+        self.objeto = mc.create_initial_object()
+        self.candidate_classes = mc.clases()
+        self.selected_class = None
+        self.class_desc = u''  # class description
+        self.output = u''  # classification results
+        self.view = None
+
+    def update_view(self):
+        "Notify and update view."
+        self.view.update()
+

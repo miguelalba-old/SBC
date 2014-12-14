@@ -3,7 +3,7 @@
 
 from PyQt4 import QtGui
 
-import ckModApClasificacion as ma
+import model as ma
 
 
 def eventClasificar(clasificacionDlg):
