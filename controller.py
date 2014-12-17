@@ -1,23 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 
-from PyQt4 import QtGui
-
-import model as ma
+from view import View
 
 
-def eventClasificar(clasificacionDlg):
-    "Classification event"
-    pruning_method = ma.MetodoPoda(clasificacionDlg.objeto)
-    candidate_classes, reason = pruning_method.execute()
+class Controller(object):
 
-    # Update results_widget
-    clasificacionDlg.results_widget.clear()
-    clasificacionDlg.results_widget.appendPlainText(reason)
-    clasificacionDlg.results_widget.moveCursor(QtGui.QTextCursor.Start)
+    def __init__(self, model):
+        self.model = model
+        self.view = View(self, model)
+        self.view.create_ui()
 
-    # Update selected_class_widget
-    selected_classes = [candidate_class.nombre
-                        for candidate_class in candidate_classes]
-    clasificacionDlg.selected_class_widget.clear()
-    clasificacionDlg.selected_class_widget.addItems(selected_classes)
+    def show_candidate_classes(self):
+        self.view.update_candidate_classes_widget()
+
+    def change_object(self, feature_num, feature_val):
+        feature = self.model.objeto.caracteristicas[feature_num]
+        if feature.atributo.tipo == 'int':
+            feature.valor = int(feature_val)
+        else:
+            feature.valor = feature_val
+
+    def classify(self):
+        self.model.classify()
+
+    def clear(self):
+        self.view.results_widget.clear()

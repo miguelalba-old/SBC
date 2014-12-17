@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-"""
-Created on Sun Jan 19 12:19:10 2014
-
-@author: acalvo
-"""
 
 # import mcFrutos as mc #Cambiar al cambiar el MC
 # import mcIris as mc #Cambiar al cambiar el MC
@@ -209,3 +204,9 @@ class Model(object):
         "Notify and update view."
         self.view.update()
 
+    def classify(self):
+        pruning_method = MetodoPoda(self.objeto)
+        candidate_classes, reason = pruning_method.execute()
+
+        self.view.update_results(reason)
+        self.view.update_selected_classes(candidate_classes)

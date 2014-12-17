@@ -21,8 +21,9 @@ class Contagio(EstadoPasajero):
         super(Contagio, self).__init__('Contagio')
         temperature_rule = kmod.Rverifica('r1', 'rango', None,
                                           self.temperature, [37, 40])
-        country_rule = kmod.Rverifica('r2', 'igual', None, self.pais, 'RIESGO')
-        contact_rule = kmod.Rverifica('r3', 'igual', None, self.contacto, 'SI')
+        country_rule = kmod.Rverifica('r2', 'igual', None, self.country,
+                                      'RIESGO')
+        contact_rule = kmod.Rverifica('r3', 'igual', None, self.contact, 'SI')
         self.reglas = (temperature_rule, country_rule, contact_rule)
 
 
@@ -32,8 +33,9 @@ class ProbableContagio(EstadoPasajero):
         super(ProbableContagio, self).__init__('Probable Contagio')
         temperature_rule = kmod.Rverifica('r1', 'rango', None,
                                           self.temperature, [37, 40])
-        country_rule = kmod.Rverifica('r2', 'igual', None, self.pais, 'RIESGO')
-        contact_rule = kmod.Rverifica('r3', 'igual', None, self.contacto, 'NO')
+        country_rule = kmod.Rverifica('r2', 'igual', None, self.country,
+                                      'RIESGO')
+        contact_rule = kmod.Rverifica('r3', 'igual', None, self.contact, 'NO')
         self.reglas = (temperature_rule, country_rule, contact_rule)
 
 
@@ -43,7 +45,8 @@ class RiesgoLeve(EstadoPasajero):
         super(RiesgoLeve, self).__init__('Riesgo Leve')
         temperature_rule = kmod.Rverifica('r1', 'rango', None,
                                           self.temperature, [37, 40])
-        country_rule = kmod.Rverifica('r2', 'igual', None, self.pais, 'SEGURO')
+        country_rule = kmod.Rverifica('r2', 'igual', None, self.country,
+                                      'SEGURO')
         self.reglas = (temperature_rule, country_rule)
 
 
@@ -52,7 +55,7 @@ class NoContagio(EstadoPasajero):
     def __init__(self):
         super(NoContagio, self).__init__('No Contagio')
         temperature_rule = kmod.Rverifica('r1', 'rango', None,
-                                          self.temperatura, [35, 37])
+                                          self.temperature, [35, 37])
         self.reglas = (temperature_rule,)
 
 
@@ -63,6 +66,6 @@ def clases():
 def create_initial_object():
     "Create fruit initial object."
     initial_values = (38, 'RIESGO', 'NO')
-    features = (kmod.Caracteristica(att, val)
-                for att, val in zip(EstadoPasajero.atributos, initial_values))
+    features = [kmod.Caracteristica(att, val)
+                for att, val in zip(EstadoPasajero.atributos, initial_values)]
     return kmod.Objeto('obj', features)
