@@ -193,6 +193,7 @@ class Model(object):
     "Application model."
 
     def __init__(self):
+        """Initialize model."""
         self.objeto = mc.create_initial_object()
         self.candidate_classes = mc.clases()
         self.selected_class = None
@@ -200,11 +201,8 @@ class Model(object):
         self.output = u''  # classification results
         self.view = None
 
-    def update_view(self):
-        "Notify and update view."
-        self.view.update()
-
     def classify(self):
+        """Classify current object and update the view."""
         pruning_method = MetodoPoda(self.objeto)
         candidate_classes, reason = pruning_method.execute()
 

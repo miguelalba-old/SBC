@@ -140,18 +140,21 @@ class View(QtGui.QWidget):
         self.class_description_widget.appendPlainText(class_description)
 
     def update_results(self, reason):
+        """Update the results_widget."""
         widget = self.results_widget
         widget.clear()
         widget.appendPlainText(reason)
         widget.moveCursor(QtGui.QTextCursor.Start)
 
     def update_selected_classes(self, candidates):
+        """Update selected_class_widget."""
         selected_classes = [candidate.nombre for candidate in candidates]
         widget = self.selected_class_widget
         widget.clear()
         widget.addItems(selected_classes)
 
     def item_changed(self, item):
+        """Event produced when an item from the object table is changed."""
         feature_num = item.row()
         feature_value = item.text()
         self.controller.change_object(feature_num, feature_value)
