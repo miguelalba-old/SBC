@@ -38,7 +38,6 @@ class View(QtGui.QWidget):
         self.object_widget.setColumnWidth(1, 200)  # 2nd col width
         self.object_widget.setHorizontalHeaderLabels(table_headers)
 
-        print objeto.caracteristicas
         for num_feature, feature in enumerate(objeto.caracteristicas):
             item1 = QtGui.QTableWidgetItem(feature.atributo.nombre)
             item1.setFlags(

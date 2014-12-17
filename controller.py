@@ -10,6 +10,7 @@ class Controller(object):
         self.model = model
         self.view = View(self, model)
         self.view.create_ui()
+        self.view.update_candidate_classes_widget()
 
     def show_candidate_classes(self):
         """Update the candidate_classes_widget."""
